@@ -8,9 +8,9 @@ import introImage from "./images/4thSection-croped.png";
 
 export function HeroSection() {
   return (
-    <section id="home" className="relative overflow-hidden px-6 pt-28 pb-20 md:px-10 md:pt-32">
+    <section id="home" className="relative overflow-hidden px-6 pt-28 pb-20 md:px-10 md:pt-32 lg:min-h-[90vh] lg:flex lg:items-center">
       <div className="mx-auto w-full max-w-7xl">
-        <div className="max-w-4xl">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
@@ -22,16 +22,17 @@ export function HeroSection() {
             </span>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-4 sm:gap-8">
-                <h1 className="font-display text-balance text-3xl leading-[1.1] font-semibold text-white min-[400px]:text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
+              <div className="flex items-center gap-4 sm:gap-6 lg:block">
+                <h1 className="font-display text-balance text-4xl leading-[1.1] font-semibold text-white min-[400px]:text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
                   Adhiraj Mishra
                 </h1>
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border-2 border-cyan-400/30 bg-white/5 backdrop-blur-sm sm:h-28 sm:w-28 md:h-36 md:w-36 lg:h-44 lg:w-44 xl:h-52 xl:w-52">
+                {/* Mobile/Tablet Image: Inline with name */}
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 border-cyan-400/30 bg-white/5 backdrop-blur-sm sm:h-20 sm:w-20 md:h-24 md:w-24 lg:hidden">
                   <Image
                     src={introImage}
                     alt="Adhiraj Mishra"
                     fill
-                    className="object-cover p-1 sm:p-2"
+                    className="object-cover p-0.5 sm:p-1"
                     priority
                   />
                 </div>
@@ -62,7 +63,7 @@ export function HeroSection() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:max-w-xl">
               {keyMetrics.map((metric, index) => (
                 <motion.div
                   key={metric.label}
@@ -75,6 +76,29 @@ export function HeroSection() {
                   <p className="mt-1 text-xs leading-relaxed text-slate-400">{metric.label}</p>
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Desktop Image: Large, prominent, fills the right side */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="hidden lg:flex relative justify-end items-center"
+          >
+            <div className="relative aspect-square w-full max-w-[500px] xl:max-w-[600px]">
+              <div className="absolute -inset-10 rounded-full bg-cyan-500/10 blur-[100px] animate-pulse" />
+              <div className="absolute inset-0 rounded-[3rem] border border-white/10 bg-linear-to-b from-white/5 to-transparent backdrop-blur-sm" />
+              
+              <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border-2 border-white/20 shadow-2xl">
+                <Image
+                  src={introImage}
+                  alt="Adhiraj Mishra Robotics Specialist"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  priority
+                />
+              </div>
             </div>
           </motion.div>
         </div>
