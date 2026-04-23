@@ -37,7 +37,7 @@ export function HeroSection() {
                   />
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <p className="text-xl font-medium text-cyan-100 md:text-3xl">AIML Engineer</p>
                 <p className="max-w-2xl text-pretty text-base leading-relaxed text-slate-300 md:text-lg">
@@ -80,16 +80,16 @@ export function HeroSection() {
           </motion.div>
 
           {/* Desktop Image: Large, prominent, fills the right side */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
             className="hidden lg:flex relative justify-end items-center"
           >
-            <div className="relative aspect-square w-full max-w-[500px] xl:max-w-[600px]">
+            <div className="relative aspect-square w-full max-w-[300px] xl:max-w-[400px]">
               <div className="absolute -inset-10 rounded-full bg-cyan-500/10 blur-[100px] animate-pulse" />
               <div className="absolute inset-0 rounded-[3rem] border border-white/10 bg-linear-to-b from-white/5 to-transparent backdrop-blur-sm" />
-              
+
               <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border-2 border-white/20 shadow-2xl">
                 <Image
                   src={introImage}
