@@ -86,7 +86,7 @@ export function HeroSection() {
             transition={{ duration: 1, delay: 0.2 }}
             className="hidden lg:flex relative justify-end items-center"
           >
-            <div className="relative aspect-square w-full max-w-[300px] xl:max-w-[400px]">
+            <div className="relative aspect-square w-full max-w-[450px] xl:max-w-[550px]">
               <div className="absolute -inset-10 rounded-full bg-cyan-500/10 blur-[100px] animate-pulse" />
               <div className="absolute inset-0 rounded-[3rem] border border-white/10 bg-linear-to-b from-white/5 to-transparent backdrop-blur-sm" />
 
