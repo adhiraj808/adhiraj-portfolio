@@ -22,16 +22,16 @@ export function HeroSection() {
             </span>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-4 sm:gap-6">
-                <h1 className="font-display text-balance text-3xl leading-[1.1] font-semibold text-white min-[400px]:text-4xl md:text-6xl xl:text-7xl">
+              <div className="flex items-center gap-4 sm:gap-8">
+                <h1 className="font-display text-balance text-3xl leading-[1.1] font-semibold text-white min-[400px]:text-4xl md:text-6xl lg:text-7xl xl:text-8xl">
                   Adhiraj Mishra
                 </h1>
-                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 border-cyan-400/30 bg-white/5 backdrop-blur-sm sm:h-20 sm:w-20 md:h-24 md:w-24 xl:h-28 xl:w-28">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border-2 border-cyan-400/30 bg-white/5 backdrop-blur-sm sm:h-28 sm:w-28 md:h-36 md:w-36 lg:h-44 lg:w-44 xl:h-52 xl:w-52">
                   <Image
                     src={introImage}
                     alt="Adhiraj Mishra"
                     fill
-                    className="object-cover p-0.5 sm:p-1"
+                    className="object-cover p-1 sm:p-2"
                     priority
                   />
                 </div>

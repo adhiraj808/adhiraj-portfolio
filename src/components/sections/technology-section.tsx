@@ -37,25 +37,25 @@ export function TechnologySection() {
         <Reveal delay={0.08}>
           <GlassCard className="mt-12">
             <div className="grid lg:grid-cols-2 gap-12 items-start p-4 sm:p-6">
-              {/* <div className="space-y-6">
+              <div className="space-y-6">
                 <p className="text-lg text-slate-300 leading-relaxed">
                   As an Engineering student passionate about Artificial Intelligence and Machine Learning, I dive deep into building intelligent systems that learn, adapt, and solve real-world problems.
                   My expertise spans designing scalable, secure systems and leveraging deep learning techniques to push the boundaries of what AI can achieve.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {techStack.map((tech) => (
-                    <span
-                      key={tech}
+                    <span 
+                      key={tech} 
                       className="px-3 py-1 rounded-full border border-slate-700 bg-slate-800/50 text-slate-300 text-sm"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-              </div> */}
+              </div>
 
               <div className="space-y-6">
-                <div className={`grid gap-6 sm:grid-cols-2 ${!isExpanded ? 'max-md:h-[300px] max-md:overflow-hidden' : ''} transition-all duration-500`}>
+                <div className={`grid gap-6 sm:grid-cols-2 ${!isExpanded ? 'max-md:max-h-[320px] max-md:overflow-hidden relative' : ''} transition-all duration-500`}>
                   {skills.map((skillGroup) => (
                     <div key={skillGroup.category} className="p-6 rounded-xl border border-slate-700 bg-slate-800/30 backdrop-blur-sm">
                       <h3 className="font-semibold mb-4 text-lg text-white">{skillGroup.category}</h3>
@@ -68,10 +68,13 @@ export function TechnologySection() {
                       </ul>
                     </div>
                   ))}
+                  
+                  {!isExpanded && (
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a1220] to-transparent md:hidden pointer-events-none" />
+                  )}
                 </div>
-
-                {/* Mobile Read More Toggle */}
-                <button
+                
+                <button 
                   onClick={() => setIsExpanded(!isExpanded)}
                   className="flex md:hidden items-center justify-center gap-2 w-full py-4 rounded-xl border border-white/10 bg-white/5 text-cyan-300 font-semibold transition hover:bg-white/10"
                 >
