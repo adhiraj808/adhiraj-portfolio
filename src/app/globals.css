@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #03050c;
+  --foreground: #f2f8ff;
+  --surface: #0a1220;
+  --cyan: #5fe8ff;
+  --indigo: #6674ff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk);
+  --font-display: var(--font-orbitron);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-orbitron), sans-serif;
+}
+
+.hero-grid {
+  background-image: linear-gradient(rgba(95, 232, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(95, 232, 255, 0.08) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at center, black 20%, transparent 85%);
+}
+
+.hero-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 0.5px, transparent 0.5px);
+  background-size: 4px 4px;
+}
+
+@keyframes pulseLine {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(220%);
+  }
+}
+
+.scanline::before {
+  content: "";
+  position: absolute;
+  inset: -40% 0 auto 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(95, 232, 255, 0), rgba(95, 232, 255, 0.16), rgba(95, 232, 255, 0));
+  animation: pulseLine 5.2s linear infinite;
+}
+
+section[id] {
+  scroll-margin-top: 112px;
+}
