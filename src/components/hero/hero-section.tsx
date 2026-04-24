@@ -1,6 +1,5 @@
 "use client";
 
-import { keyMetrics } from "@/data/site-content";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,21 +61,6 @@ export function HeroSection() {
                 Contact Me
               </Link>
             </div>
-
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:max-w-xl">
-              {keyMetrics.map((metric, index) => (
-                <motion.div
-                  key={metric.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.55, delay: index * 0.08 + 0.25 }}
-                  className="rounded-2xl border border-white/10 bg-white/4 p-4 backdrop-blur-xl"
-                >
-                  <p className="font-display text-2xl text-cyan-100">{metric.value}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-400">{metric.label}</p>
-                </motion.div>
-              ))}
-            </div>
           </motion.div>
 
           {/* Desktop Image: Large, prominent, fills the right side */}
@@ -93,9 +77,9 @@ export function HeroSection() {
               <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border-2 border-white/20 shadow-2xl">
                 <Image
                   src={introImage}
-                  alt="Adhiraj Mishra Robotics Specialist"
+                  alt="Adhiraj Mishra"
                   fill
-                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  className="object-cover"
                   priority
                 />
               </div>

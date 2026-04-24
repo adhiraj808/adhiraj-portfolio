@@ -24,6 +24,7 @@ export const navItems: NavItem[] = [
   { label: "Projects", href: "#products" },
   { label: "Skills", href: "#technology" },
   { label: "Contact", href: "#contact" },
+  { label: "Resume", href: "/resume" },
 ];
 
 export const keyMetrics = [
@@ -41,7 +42,7 @@ export const products: ProductItem[] = [
       "Developed a real-time detection system to identify guns, rifles, scissors, and knives from images and video streams with live camera support.",
     capabilities:
       "Pre-trained YOLOv3 customization, dataset preprocessing, annotation formatting, bounding boxes with confidence scores",
-    githubUrl: "https://github.com/adhirajmishra",
+    githubUrl: "https://github.com/adhiraj808",
     liveUrl: "#",
   },
   {
@@ -51,7 +52,7 @@ export const products: ProductItem[] = [
       "Built a real-time multiplayer Ping-Pong game with Web Sockets and live game-state synchronization between players.",
     capabilities:
       "Ball physics, paddle movement, scoring logic, HTML + Tailwind CSS + JavaScript frontend, ongoing UI/UX improvements",
-    githubUrl: "https://github.com/adhirajmishra",
+    githubUrl: "https://github.com/adhiraj808",
     liveUrl: "#",
   },
   {
@@ -61,7 +62,7 @@ export const products: ProductItem[] = [
       "Developed and deployed a responsive healthcare website with reusable UI components and production-ready frontend quality.",
     capabilities:
       "HTML, Tailwind CSS, JavaScript, performance optimization, live site: https://vkrehealth-in.vercel.app",
-    githubUrl: "https://github.com/adhirajmishra",
+    githubUrl: "https://github.com/adhiraj808",
     liveUrl: "https://vkrehealth-in.vercel.app",
   },
 ];

@@ -14,7 +14,14 @@ export function SiteHeader() {
 
   useEffect(() => {
     const sections = navItems
-      .map((item) => document.querySelector(item.href))
+      .filter((item) => item.href.startsWith("#"))
+      .map((item) => {
+        try {
+          return document.querySelector(item.href);
+        } catch (e) {
+          return null;
+        }
+      })
       .filter((element): element is Element => element !== null);
 
     const observer = new IntersectionObserver(
@@ -76,11 +83,27 @@ export function SiteHeader() {
 
           <nav className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => {
-              const id = item.href.replace("#", "");
-              const isActive = id === activeSection;
+              const isHash = item.href.startsWith("#");
+              const id = isHash ? item.href.replace("#", "") : "";
+              const isActive = isHash ? id === activeSection : false;
+
+              if (isHash) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "rounded-full px-4 py-2 text-sm text-slate-300 transition hover:text-white",
+                      isActive && "bg-white/10 text-cyan-200",
+                    )}
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
 
               return (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
@@ -89,18 +112,10 @@ export function SiteHeader() {
                   )}
                 >
                   {item.label}
-                </a>
+                </Link>
               );
             })}
           </nav>
-
-          <a
-            href="#contact"
-            className="hidden rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200 hover:bg-cyan-300/20 lg:inline-flex"
-          >
-            Hire Me
-          </a>
-
           <button
             type="button"
             onClick={() => setIsMobileOpen((value) => !value)}
@@ -114,11 +129,28 @@ export function SiteHeader() {
         {isMobileOpen ? (
           <nav className="mt-4 grid gap-2 border-t border-white/10 pt-4 lg:hidden">
             {navItems.map((item) => {
-              const id = item.href.replace("#", "");
-              const isActive = id === activeSection;
+              const isHash = item.href.startsWith("#");
+              const id = isHash ? item.href.replace("#", "") : "";
+              const isActive = isHash ? id === activeSection : false;
+
+              if (isHash) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className={cn(
+                      "rounded-xl px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white",
+                      isActive && "bg-white/10 text-cyan-100",
+                    )}
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
 
               return (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileOpen(false)}
@@ -128,7 +160,7 @@ export function SiteHeader() {
                   )}
                 >
                   {item.label}
-                </a>
+                </Link>
               );
             })}
           </nav>
