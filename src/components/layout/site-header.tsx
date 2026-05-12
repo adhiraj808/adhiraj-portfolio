@@ -18,7 +18,7 @@ export function SiteHeader() {
       .map((item) => {
         try {
           return document.querySelector(item.href);
-        } catch (e) {
+        } catch {
           return null;
         }
       })
@@ -84,6 +84,7 @@ export function SiteHeader() {
           <nav className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => {
               const isHash = item.href.startsWith("#");
+              const isAsset = item.href.includes(".");
               const id = isHash ? item.href.replace("#", "") : "";
               const isActive = isHash ? id === activeSection : false;
 
@@ -103,16 +104,18 @@ export function SiteHeader() {
               }
 
               return (
-                <Link
+                <a
                   key={item.href}
                   href={item.href}
+                  target={isAsset ? "_blank" : undefined}
+                  rel={isAsset ? "noopener noreferrer" : undefined}
                   className={cn(
                     "rounded-full px-4 py-2 text-sm text-slate-300 transition hover:text-white",
                     isActive && "bg-white/10 text-cyan-200",
                   )}
                 >
                   {item.label}
-                </Link>
+                </a>
               );
             })}
           </nav>
@@ -130,6 +133,7 @@ export function SiteHeader() {
           <nav className="mt-4 grid gap-2 border-t border-white/10 pt-4 lg:hidden">
             {navItems.map((item) => {
               const isHash = item.href.startsWith("#");
+              const isAsset = item.href.includes(".");
               const id = isHash ? item.href.replace("#", "") : "";
               const isActive = isHash ? id === activeSection : false;
 
@@ -150,9 +154,11 @@ export function SiteHeader() {
               }
 
               return (
-                <Link
+                <a
                   key={item.href}
                   href={item.href}
+                  target={isAsset ? "_blank" : undefined}
+                  rel={isAsset ? "noopener noreferrer" : undefined}
                   onClick={() => setIsMobileOpen(false)}
                   className={cn(
                     "rounded-xl px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white",
@@ -160,7 +166,7 @@ export function SiteHeader() {
                   )}
                 >
                   {item.label}
-                </Link>
+                </a>
               );
             })}
           </nav>

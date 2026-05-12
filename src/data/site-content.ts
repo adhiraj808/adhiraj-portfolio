@@ -24,7 +24,6 @@ export const navItems: NavItem[] = [
   { label: "Projects", href: "#products" },
   { label: "Skills", href: "#technology" },
   { label: "Contact", href: "#contact" },
-  { label: "Resume", href: "/resume" },
 ];
 
 export const keyMetrics = [

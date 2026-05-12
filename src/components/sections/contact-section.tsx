@@ -2,7 +2,7 @@
 
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { Mail, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send, Loader2 } from "lucide-react";
 import { FormEvent, useState } from "react";
 
 type FormState = {
@@ -10,6 +10,7 @@ type FormState = {
   email: string;
   topic: string;
   message: string;
+  honeypot: string; // Anti-spam field
 };
 
 const defaultForm: FormState = {
@@ -17,32 +18,43 @@ const defaultForm: FormState = {
   email: "",
   topic: "",
   message: "",
+  honeypot: "",
 };
 
 export function ContactSection() {
   const [form, setForm] = useState<FormState>(defaultForm);
-  const [status, setStatus] = useState<string>("");
+  const [status, setStatus] = useState<{ type: "success" | "error" | "loading" | null; message: string }>({
+    type: null,
+    message: "",
+  });
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setStatus({ type: "loading", message: "Sending your message..." });
 
-    const subject = encodeURIComponent(`Portfolio Inquiry: ${form.topic}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\n` +
-      `Email: ${form.email}\n\n` +
-      `Message:\n${form.message}`
-    );
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    // This opens the user's default email client
-    window.location.href = `mailto:adhirajmishra99@gmail.com?subject=${subject}&body=${body}`;
+      const data = await response.json();
 
-    setStatus("Opening your email application...");
-    
-    // Clear status after a short delay
+      if (response.ok) {
+        setStatus({ type: "success", message: "Message sent! I'll get back to you soon." });
+        setForm(defaultForm);
+      } else {
+        setStatus({ type: "error", message: data.message || "Something went wrong. Please try again." });
+      }
+    } catch {
+      setStatus({ type: "error", message: "Failed to connect to the server." });
+    }
+
+    // Reset status after 5 seconds
     setTimeout(() => {
-      setStatus("");
-      setForm(defaultForm);
-    }, 3000);
+      setStatus({ type: null, message: "" });
+    }, 5000);
   };
 
   return (
@@ -99,6 +111,17 @@ export function ContactSection() {
           <Reveal delay={0.08} className="w-full lg:w-2/3">
             <div className="rounded-3xl border border-white/12 bg-black/40 p-6 md:p-8 backdrop-blur-xl shadow-2xl">
               <form onSubmit={onSubmit} className="space-y-6">
+                {/* Honeypot field (hidden from users) */}
+                <input
+                  type="text"
+                  name="honeypot"
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.honeypot}
+                  onChange={(e) => setForm({ ...form, honeypot: e.target.value })}
+                />
+
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-200" htmlFor="name">Name</label>
@@ -154,15 +177,25 @@ export function ContactSection() {
 
                 <button
                   type="submit"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 px-6 py-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 md:w-auto"
+                  disabled={status.type === "loading"}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 px-6 py-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 disabled:opacity-50 disabled:cursor-not-allowed md:w-auto"
                 >
-                  Send Message
-                  <Send size={16} />
+                  {status.type === "loading" ? (
+                    <>
+                      Sending...
+                      <Loader2 size={16} className="animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send size={16} />
+                    </>
+                  )}
                 </button>
 
-                {status && (
-                  <p className="text-sm text-cyan-400">
-                    {status}
+                {status.message && (
+                  <p className={`text-sm ${status.type === "error" ? "text-red-400" : "text-cyan-400"}`}>
+                    {status.message}
                   </p>
                 )}
               </form>

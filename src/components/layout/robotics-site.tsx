@@ -5,6 +5,7 @@ import { AboutSection } from "@/components/sections/about-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { ProductsSection } from "@/components/sections/products-section";
 import { TechnologySection } from "@/components/sections/technology-section";
+import { ScrollToTop } from "@/components/shared/scroll-to-top";
 import { AmbientBackground } from "./ambient-background";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
@@ -25,6 +26,7 @@ export function PortfolioSite() {
       </main>
 
       <SiteFooter />
+      <ScrollToTop />
     </SmoothScrollProvider>
   );
 }

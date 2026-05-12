@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import introImage from "./images/4thSection-croped.png";
@@ -26,14 +27,27 @@ export function HeroSection() {
                   Adhiraj Mishra
                 </h1>
                 {/* Mobile/Tablet Image: Inline with name */}
-                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 border-cyan-400/30 bg-white/5 backdrop-blur-sm sm:h-20 sm:w-20 md:h-24 md:w-24 lg:hidden">
-                  <Image
-                    src={introImage}
-                    alt="Adhiraj Mishra"
-                    fill
-                    className="object-cover p-0.5 sm:p-1"
-                    priority
-                  />
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-cyan-400/30 bg-white/5 backdrop-blur-sm sm:h-20 sm:w-20 md:h-24 md:w-24 lg:hidden">
+                  {/* Animated Border for Mobile */}
+                  <div className="absolute inset-0 p-[3px] overflow-hidden rounded-xl">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      style={{
+                        background: "conic-gradient(from 0deg, transparent 30%, #5fe8ff 50%, #5fe8ff 70%, transparent 90%)",
+                      }}
+                      className="absolute inset-[-150%] blur-[2px]"
+                    />
+                  </div>
+                  <div className="relative h-full w-full overflow-hidden rounded-[10px] bg-[#03050c]">
+                    <Image
+                      src={introImage}
+                      alt="Adhiraj Mishra"
+                      fill
+                      className="object-cover p-0.5 sm:p-1"
+                      priority
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -60,6 +74,14 @@ export function HeroSection() {
               >
                 Contact Me
               </Link>
+              <a
+                href="/resume.pdf"
+                download="Adhiraj_Mishra_Resume.pdf"
+                className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:border-cyan-400/60 hover:bg-cyan-400/20"
+              >
+                <Download size={18} />
+                Download CV
+              </a>
             </div>
           </motion.div>
 
@@ -72,9 +94,21 @@ export function HeroSection() {
           >
             <div className="relative aspect-square w-full max-w-[450px] xl:max-w-[550px]">
               <div className="absolute -inset-10 rounded-full bg-cyan-500/10 blur-[100px] animate-pulse" />
-              <div className="absolute inset-0 rounded-[3rem] border border-white/10 bg-linear-to-b from-white/5 to-transparent backdrop-blur-sm" />
+              
+              {/* Animated Border Beam Layer */}
+              <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] p-[4px]">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  style={{
+                    background: "conic-gradient(from 0deg, transparent 30%, #5fe8ff 50%, #5fe8ff 70%, transparent 90%)",
+                  }}
+                  className="absolute inset-[-150%] blur-[3px]"
+                />
+              </div>
 
-              <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border-2 border-white/20 shadow-2xl">
+              {/* Main Image Container */}
+              <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#03050c] shadow-2xl">
                 <Image
                   src={introImage}
                   alt="Adhiraj Mishra"
