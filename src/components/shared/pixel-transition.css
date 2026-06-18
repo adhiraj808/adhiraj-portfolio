@@ -1,0 +1,45 @@
+.pixel-transition {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.pixel-transition__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pixel-transition__default,
+.pixel-transition__active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pixel-transition__active {
+  opacity: 0;
+  z-index: 1;
+}
+
+.pixel-transition__active.is-visible {
+  opacity: 1;
+}
+
+.pixel-transition__grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.pixel-transition__pixel {
+  opacity: 0;
+}

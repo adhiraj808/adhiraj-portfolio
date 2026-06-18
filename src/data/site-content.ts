@@ -3,7 +3,7 @@ export type NavItem = {
   href: string;
 };
 
-export type ProductItem = {
+export type ProjectItem = {
   title: string;
   category: string;
   description: string;
@@ -12,7 +12,7 @@ export type ProductItem = {
   liveUrl?: string;
 };
 
-export type TechnologyItem = {
+export type SkillItem = {
   title: string;
   summary: string;
   metrics: string;
@@ -21,8 +21,8 @@ export type TechnologyItem = {
 export const navItems: NavItem[] = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Projects", href: "#products" },
-  { label: "Skills", href: "#technology" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -33,7 +33,7 @@ export const keyMetrics = [
   { label: "Major Projects", value: "3" },
 ];
 
-export const products: ProductItem[] = [
+export const projects: ProjectItem[] = [
   {
     title: "Harmful Weapons (Custom) Detection System - YOLOv3",
     category: "December 2025",
@@ -66,7 +66,7 @@ export const products: ProductItem[] = [
   },
 ];
 
-export const technologies: TechnologyItem[] = [
+export const skills: SkillItem[] = [
   {
     title: "Programming & Machine Learning",
     summary:

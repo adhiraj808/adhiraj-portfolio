@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { BorderGlow } from "../shared/border-glow";
+import GlareHover from "../shared/glare-hover";
+import PixelTransition from "../shared/pixel-transition";
 import introImage from "./images/4thSection-croped.png";
+import manAloneImage from "./images/man-alone.jpg";
 
 export function HeroSection() {
   return (
@@ -27,27 +31,31 @@ export function HeroSection() {
                   Adhiraj Mishra
                 </h1>
                 {/* Mobile/Tablet Image: Inline with name */}
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-cyan-400/30 bg-white/5 backdrop-blur-sm sm:h-20 sm:w-20 md:h-24 md:w-24 lg:hidden">
-                  {/* Animated Border for Mobile */}
-                  <div className="absolute inset-0 p-[3px] overflow-hidden rounded-xl">
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                      style={{
-                        background: "conic-gradient(from 0deg, transparent 30%, #5fe8ff 50%, #5fe8ff 70%, transparent 90%)",
-                      }}
-                      className="absolute inset-[-150%] blur-[2px]"
-                    />
-                  </div>
-                  <div className="relative h-full w-full overflow-hidden rounded-[10px] bg-[#03050c]">
-                    <Image
-                      src={introImage}
-                      alt="Adhiraj Mishra"
-                      fill
-                      className="object-cover p-0.5 sm:p-1"
-                      priority
-                    />
-                  </div>
+                <div className="lg:hidden shrink-0">
+                  <BorderGlow 
+                    borderRadius={12} 
+                    glowRadius={40} 
+                    className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24"
+                    glowColor="189 100% 70%"
+                    backgroundColor="#03050c"
+                    colors={["#5fe8ff", "#6674ff", "#5fe8ff"]}
+                  >
+                    <GlareHover
+                      borderRadius="12px"
+                      glareOpacity={0.2}
+                      glareSize={200}
+                    >
+                      <div className="relative h-full w-full bg-[#03050c]">
+                        <Image
+                          src={introImage}
+                          alt="Adhiraj Mishra"
+                          fill
+                          className="object-cover"
+                          priority
+                        />
+                      </div>
+                    </GlareHover>
+                  </BorderGlow>
                 </div>
               </div>
 
@@ -63,7 +71,7 @@ export function HeroSection() {
 
             <div className="flex flex-wrap gap-4">
               <Link
-                href="#products"
+                href="#projects"
                 className="rounded-full border border-cyan-300/60 bg-cyan-300/12 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/24"
               >
                 View Projects
@@ -95,28 +103,50 @@ export function HeroSection() {
             <div className="relative aspect-square w-full max-w-[450px] xl:max-w-[550px]">
               <div className="absolute -inset-10 rounded-full bg-cyan-500/10 blur-[100px] animate-pulse" />
               
-              {/* Animated Border Beam Layer */}
-              <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] p-[4px]">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                  style={{
-                    background: "conic-gradient(from 0deg, transparent 30%, #5fe8ff 50%, #5fe8ff 70%, transparent 90%)",
-                  }}
-                  className="absolute inset-[-150%] blur-[3px]"
-                />
-              </div>
-
-              {/* Main Image Container */}
-              <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#03050c] shadow-2xl">
-                <Image
-                  src={introImage}
-                  alt="Adhiraj Mishra"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
+              <BorderGlow 
+                borderRadius={40} 
+                glowRadius={150} 
+                glowColor="189 100% 70%"
+                backgroundColor="#03050c"
+                colors={["#5fe8ff", "#6674ff", "#5fe8ff"]}
+                className="h-full w-full shadow-2xl"
+                animated
+              >
+                <GlareHover
+                  borderRadius="40px"
+                  glareOpacity={0.25}
+                  glareSize={250}
+                >
+                  <PixelTransition
+                    firstContent={
+                      <div className="relative h-full w-full bg-[#03050c]">
+                        <Image
+                          src={manAloneImage}
+                          alt="Adhiraj Mishra"
+                          fill
+                          className="object-cover"
+                          priority
+                        />
+                      </div>
+                    }
+                    secondContent={
+                      <div className="relative h-full w-full bg-[#03050c]">
+                        <Image
+                          src={introImage}
+                          alt="Adhiraj Mishra"
+                          fill
+                          className="object-cover"
+                          priority
+                        />
+                      </div>
+                    }
+                    gridSize={24}
+                    pixelColor="#03050c"
+                    animationStepDuration={0.4}
+                    style={{ borderRadius: "40px" }}
+                  />
+                </GlareHover>
+              </BorderGlow>
             </div>
           </motion.div>
         </div>

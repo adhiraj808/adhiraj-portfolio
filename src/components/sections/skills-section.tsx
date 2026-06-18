@@ -20,11 +20,11 @@ const techStack = [
   "Scikit-learn",
 ];
 
-export function TechnologySection() {
+export function SkillsSection() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section id="technology" className="px-6 py-24 md:px-10">
+    <section id="skills" className="px-6 py-24 md:px-10">
       <div className="mx-auto w-full max-w-7xl">
         <Reveal>
           <SectionHeading
