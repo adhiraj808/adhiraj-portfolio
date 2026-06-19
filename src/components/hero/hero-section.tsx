@@ -140,9 +140,9 @@ export function HeroSection() {
                         />
                       </div>
                     }
-                    gridSize={24}
+                    gridSize={8}
                     pixelColor="#03050c"
-                    animationStepDuration={0.4}
+                    animationStepDuration={0.15}
                     style={{ borderRadius: "40px" }}
                   />
                 </GlareHover>

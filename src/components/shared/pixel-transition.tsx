@@ -71,6 +71,9 @@ export default function PixelTransition({
         delayedCallRef.current.kill();
         delayedCallRef.current = null;
       }
+      
+      // Kill all running tweens on the pixels so they don't conflict when moving mouse quickly
+      gsap.killTweensOf(pixels);
 
       if (activate) {
         // Animate pixels IN (cover the first content)
