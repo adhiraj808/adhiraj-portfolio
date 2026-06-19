@@ -7,17 +7,20 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 const skills = [
-  { category: "Machine Learning", items: ["TensorFlow", "PyTorch", "Scikit-learn", "Neural Networks"] },
-  { category: "Data Science", items: ["Python", "Pandas", "NumPy", "Data Visualization"] },
-  { category: "AI Tools", items: ["OpenAI", "Hugging Face", "NLTK", "Computer Vision"] },
-  { category: "Cloud & MLOps", items: ["AWS SageMaker", "Docker", "MLflow", "Kubernetes"] },
+  { category: "AI / Machine Learning", items: ["TensorFlow", "Keras", "Scikit-learn", "OpenCV", "YOLOv3", "Hugging Face API", "Google Gemini API"] },
+  { category: "Web Development", items: ["JavaScript", "React.js", "Next.js", "Tailwind CSS", "MongoDB", "HTML/CSS"] },
+  { category: "Data Analysis", items: ["Python", "NumPy", "Pandas", "Matplotlib", "SQL", "Power BI"] },
+  { category: "Cloud & DevOps", items: ["AWS (EC2, S3)", "Docker", "Git", "GitHub"] },
 ];
 
 const techStack = [
   "Python",
+  "JavaScript",
   "TensorFlow",
-  "PyTorch",
-  "Scikit-learn",
+  "Next.js",
+  "React.js",
+  "OpenCV",
+  "YOLOv3",
 ];
 
 export function SkillsSection() {

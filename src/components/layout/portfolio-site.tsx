@@ -22,8 +22,8 @@ export function PortfolioSite() {
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-      // If we're within 10px of the bottom, consider it "at the bottom"
-      setIsAtBottom(scrollTop + windowHeight >= documentHeight - 10);
+      // If we're within 100px of the bottom, consider it "at the bottom"
+      setIsAtBottom(Math.ceil(scrollTop + windowHeight) >= documentHeight - 100);
     };
 
     window.addEventListener("scroll", handleScroll);
