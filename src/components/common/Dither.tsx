@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState, Suspense } from "react";
-import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
-import { TextureLoader } from "three";
+import { useRef, useEffect, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 const waveVertexShader = `
@@ -132,7 +131,7 @@ void main() {
   if (mapUv.x >= 0.0 && mapUv.x <= 1.0 && mapUv.y >= 0.0 && mapUv.y <= 1.0) {
     vec4 mapColor = texture2D(uMap, mapUv);
     isLand = mapColor.a > 0.05 ? 1.0 : 0.0;
-    // India path has fill="#ff0000" in the SVG, so it is pure red (red channel high, green/blue channels low)
+    // India is highlighted in red in our Canvas-generated texture
     isIndia = (isLand > 0.5 && mapColor.r > 0.8 && mapColor.g < 0.2 && mapColor.b < 0.2) ? 1.0 : 0.0;
   }
   
@@ -201,6 +200,7 @@ interface DitheredWavesProps {
   disableAnimation: boolean;
   enableMouseInteraction: boolean;
   mouseRadius: number;
+  mapTexture: THREE.CanvasTexture;
 }
 
 function DitheredWaves({
@@ -213,11 +213,11 @@ function DitheredWaves({
   disableAnimation,
   enableMouseInteraction,
   mouseRadius,
+  mapTexture,
 }: DitheredWavesProps) {
   const mesh = useRef<THREE.Mesh>(null);
   const mouseRef = useRef(new THREE.Vector2());
   const { viewport, size, gl } = useThree();
-  const mapTexture = useLoader(TextureLoader, "/world-map-solid.svg");
 
   const waveUniformsRef = useRef<WaveUniforms>({
     time: { value: 0 },
@@ -243,6 +243,11 @@ function DitheredWaves({
       currentRes.set(newWidth, newHeight);
     }
   }, [size, gl]);
+
+  // Keep texture reference updated in uniforms if it changes
+  useEffect(() => {
+    waveUniformsRef.current.uMap.value = mapTexture;
+  }, [mapTexture]);
 
   // Global mouse event listener to capture mouse position anywhere on the screen
   useEffect(() => {
@@ -316,7 +321,7 @@ export default function Dither({
   waveSpeed = 0.05,
   waveFrequency = 3,
   waveAmplitude = 0.3,
-  waveColor = [0.05, 0.08, 0.18], // Custom dark indigo cyber theme color matching globals.css
+  waveColor = [0.05, 0.08, 0.18],
   colorNum = 4,
   pixelSize = 2,
   disableAnimation = false,
@@ -324,12 +329,73 @@ export default function Dither({
   mouseRadius = 1,
 }: DitherProps) {
   const [mounted, setMounted] = useState(false);
+  const [mapTexture, setMapTexture] = useState<THREE.CanvasTexture | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  // Safe client-side vector parsing and canvas rendering of the world map SVG
+  useEffect(() => {
+    if (!mounted) return;
+
+    fetch("/world-map-solid.svg")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch world map");
+        return res.text();
+      })
+      .then((svgText) => {
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+        
+        // Retrieve viewBox resolution bounds
+        const svgElement = svgDoc.querySelector("svg");
+        const viewBox = svgElement?.getAttribute("viewBox") || svgElement?.getAttribute("viewbox") || "0 0 2000 857";
+        const [, , wStr, hStr] = viewBox.split(" ");
+        const width = parseFloat(wStr) || 2000;
+        const height = parseFloat(hStr) || 857;
+
+        // Render to offscreen canvas
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        
+        if (ctx) {
+          ctx.clearRect(0, 0, width, height);
+          
+          const paths = svgDoc.getElementsByTagName("path");
+          for (let i = 0; i < paths.length; i++) {
+            const p = paths[i];
+            const d = p.getAttribute("d");
+            if (d) {
+              const name = p.getAttribute("name") || "";
+              const countryClass = p.getAttribute("class") || "";
+              const isIndia = name.toLowerCase() === "india" || countryClass.toUpperCase() === "IN";
+              
+              // Key India in red so the WebGL shader can apply color overrides
+              ctx.fillStyle = isIndia ? "#ff0000" : "#ffffff";
+              
+              // Rasterize SVG path string natively
+              const path2D = new Path2D(d);
+              ctx.fill(path2D);
+            }
+          }
+          
+          const texture = new THREE.CanvasTexture(canvas);
+          texture.minFilter = THREE.LinearFilter;
+          texture.magFilter = THREE.LinearFilter;
+          texture.needsUpdate = true;
+          setMapTexture(texture);
+        }
+      })
+      .catch((err) => {
+        console.error("Could not load /world-map-solid.svg texture:", err);
+      });
+  }, [mounted]);
+
+  // Prevent SSR crashes by rendering only on the client once mounted and texture is ready
+  if (!mounted || !mapTexture) return null;
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -339,19 +405,18 @@ export default function Dither({
         dpr={1}
         gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
       >
-        <Suspense fallback={null}>
-          <DitheredWaves
-            waveSpeed={waveSpeed}
-            waveFrequency={waveFrequency}
-            waveAmplitude={waveAmplitude}
-            waveColor={waveColor}
-            colorNum={colorNum}
-            pixelSize={pixelSize}
-            disableAnimation={disableAnimation}
-            enableMouseInteraction={enableMouseInteraction}
-            mouseRadius={mouseRadius}
-          />
-        </Suspense>
+        <DitheredWaves
+          waveSpeed={waveSpeed}
+          waveFrequency={waveFrequency}
+          waveAmplitude={waveAmplitude}
+          waveColor={waveColor}
+          colorNum={colorNum}
+          pixelSize={pixelSize}
+          disableAnimation={disableAnimation}
+          enableMouseInteraction={enableMouseInteraction}
+          mouseRadius={mouseRadius}
+          mapTexture={mapTexture}
+        />
       </Canvas>
     </div>
   );
