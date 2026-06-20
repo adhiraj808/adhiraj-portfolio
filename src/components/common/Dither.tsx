@@ -119,11 +119,11 @@ void main() {
     fitUv.x = (fitUv.x - 0.5) / scaleX + 0.5;
   }
   
-  // Blend 80% perfect aspect ratio fit and 20% full screen stretch
-  vec2 mapUv = mix(fitUv, stretchUv, 0.2);
+  // Blend 55% perfect aspect ratio fit and 45% full screen stretch to pull the map edges inwards
+  vec2 mapUv = mix(fitUv, stretchUv, 0.45);
   
-  // Apply a 1.15x zoom (scale) so the map fills the page space better
-  mapUv = (mapUv - 0.5) / 1.15 + 0.5;
+  // Scale by 0.95 (zoom out slightly) to ensure Australia & New Zealand on the right are fully visible
+  mapUv = (mapUv - 0.5) / 0.95 + 0.5;
   
   // Determine if this pixel is on land (inside the continents)
   float isLand = 0.0;
