@@ -120,10 +120,19 @@ void main() {
     f -= 0.5 * effect;
   }
   
-  vec3 col = mix(vec3(0.0), waveColor, f);
+  // Mix between empty space and the wave color based on noise intensity
+  vec3 col = waveColor * clamp(f, 0.0, 1.0);
+  
+  // Dither the color
   vec3 ditheredCol = dither(gl_FragCoord.xy / resolution.xy, col);
   
-  gl_FragColor = vec4(ditheredCol, 1.0);
+  // Dithered brightness is mapped directly to the alpha channel
+  float brightness = max(ditheredCol.r, max(ditheredCol.g, ditheredCol.b));
+  
+  // We scale down the max opacity to keep it subtle and aesthetic (35% opacity max)
+  float alpha = clamp(brightness * 0.35, 0.0, 1.0);
+  
+  gl_FragColor = vec4(ditheredCol, alpha);
 }
 `;
 
@@ -242,6 +251,8 @@ function DitheredWaves({
         vertexShader={waveVertexShader}
         fragmentShader={waveFragmentShader}
         uniforms={waveUniformsRef.current}
+        transparent={true}
+        depthWrite={false}
       />
     </mesh>
   );
@@ -284,7 +295,7 @@ export default function Dither({
         className="w-full h-full"
         camera={{ position: [0, 0, 6] }}
         dpr={1}
-        gl={{ antialias: true, preserveDrawingBuffer: true }}
+        gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
       >
         <DitheredWaves
           waveSpeed={waveSpeed}
