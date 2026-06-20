@@ -6,6 +6,97 @@
   --surface: #0a1220;
   --cyan: #5fe8ff;
   --indigo: #6674ff;
+
+  /* Glass Card Custom Settings */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 20px 60px -30px rgba(13, 179, 255, 0.45);
+
+  /* Header Custom Settings */
+  --header-bg: rgba(0, 0, 0, 0.2);
+  --header-bg-scrolled: rgba(0, 0, 0, 0.5);
+  --header-border: rgba(255, 255, 255, 0.1);
+  --header-border-scrolled: rgba(95, 232, 255, 0.25);
+  
+  /* Input Custom Settings */
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-bg-focus: rgba(255, 255, 255, 0.1);
+  --input-border: rgba(255, 255, 255, 0.1);
+  
+  /* Button Ghost Settings */
+  --button-ghost-bg: rgba(255, 255, 255, 0.05);
+  --button-ghost-border: rgba(255, 255, 255, 0.15);
+  --button-ghost-hover-bg: rgba(255, 255, 255, 0.1);
+
+  /* Social Links Footer Settings */
+  --footer-bg: rgba(0, 0, 0, 0.4);
+  --footer-border: rgba(255, 255, 255, 0.1);
+
+  /* Text & Foreground mappings */
+  --text-white: #ffffff;
+  --text-slate-200: #e2e8f0;
+  --text-slate-300: #cbd5e1;
+  --text-slate-400: #94a3b8;
+  --text-cyan-100: #cffafe;
+  --text-cyan-200: #a5f3fc;
+  --text-cyan-300: #67e8f9;
+
+  /* Ambient Grid & Glow Settings */
+  --grid-color: rgba(95, 232, 255, 0.08);
+  --noise-color: rgba(255, 255, 255, 0.07);
+  --hero-glow-cyan: rgba(95, 232, 255, 0.1);
+  --hero-glow-indigo: rgba(102, 116, 255, 0.1);
+  --scanline-color: rgba(95, 232, 255, 0.16);
+}
+
+:root.light {
+  /* Milk White Theme */
+  --background: #faf9f6; /* Creamy Milk White */
+  --foreground: #1e293b; /* Charcoal/slate-800 for high readability */
+  --surface: #ffffff;
+  --cyan: #0891b2; /* High-contrast cyan */
+  --indigo: #4f46e5; /* High-contrast indigo */
+
+  /* Glass Card Custom Settings (Premium Milk Glass) */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(30, 41, 59, 0.08);
+  --glass-shadow: 0 20px 50px -25px rgba(30, 41, 59, 0.08);
+
+  /* Header Custom Settings */
+  --header-bg: rgba(255, 255, 255, 0.45);
+  --header-bg-scrolled: rgba(255, 255, 255, 0.8);
+  --header-border: rgba(30, 41, 59, 0.06);
+  --header-border-scrolled: rgba(79, 70, 229, 0.15);
+  
+  /* Input Custom Settings */
+  --input-bg: rgba(30, 41, 59, 0.03);
+  --input-bg-focus: rgba(30, 41, 59, 0.06);
+  --input-border: rgba(30, 41, 59, 0.08);
+  
+  /* Button Ghost Settings */
+  --button-ghost-bg: rgba(30, 41, 59, 0.03);
+  --button-ghost-border: rgba(30, 41, 59, 0.08);
+  --button-ghost-hover-bg: rgba(30, 41, 59, 0.06);
+
+  /* Social Links Footer Settings */
+  --footer-bg: rgba(255, 255, 255, 0.6);
+  --footer-border: rgba(30, 41, 59, 0.06);
+
+  /* Text & Foreground mappings for Light mode */
+  --text-white: #1e293b;
+  --text-slate-200: #334155;
+  --text-slate-300: #475569;
+  --text-slate-400: #64748b;
+  --text-cyan-100: #0e7490;
+  --text-cyan-200: #0891b2;
+  --text-cyan-300: #0369a1;
+
+  /* Ambient Grid & Glow Settings */
+  --grid-color: rgba(79, 70, 229, 0.04);
+  --noise-color: rgba(30, 41, 59, 0.02);
+  --hero-glow-cyan: rgba(8, 145, 178, 0.04);
+  --hero-glow-indigo: rgba(79, 70, 229, 0.04);
+  --scanline-color: rgba(79, 70, 229, 0.03);
 }
 
 @theme inline {
@@ -13,6 +104,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-space-grotesk);
   --font-display: var(--font-orbitron);
+
+  /* Dynamic Tailwind bindings */
+  --color-white: var(--text-white);
+  --color-slate-200: var(--text-slate-200);
+  --color-slate-300: var(--text-slate-300);
+  --color-slate-400: var(--text-slate-400);
+  --color-cyan-100: var(--text-cyan-100);
+  --color-cyan-200: var(--text-cyan-200);
+  --color-cyan-300: var(--text-cyan-300);
 }
 
 body {
@@ -28,14 +128,14 @@ body {
 }
 
 .hero-grid {
-  background-image: linear-gradient(rgba(95, 232, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(95, 232, 255, 0.08) 1px, transparent 1px);
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 46px 46px;
   mask-image: radial-gradient(circle at center, black 20%, transparent 85%);
 }
 
 .hero-noise {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 0.5px, transparent 0.5px);
+  background-image: radial-gradient(var(--noise-color) 0.5px, transparent 0.5px);
   background-size: 4px 4px;
 }
 
@@ -53,8 +153,15 @@ body {
   position: absolute;
   inset: -40% 0 auto 0;
   height: 50%;
-  background: linear-gradient(to bottom, rgba(95, 232, 255, 0), rgba(95, 232, 255, 0.16), rgba(95, 232, 255, 0));
+  background: linear-gradient(to bottom, transparent, var(--scanline-color, rgba(95, 232, 255, 0.16)), transparent);
   animation: pulseLine 5.2s linear infinite;
+}
+
+.glass-card-style {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 section[id] {

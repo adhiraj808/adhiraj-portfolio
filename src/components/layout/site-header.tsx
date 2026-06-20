@@ -3,7 +3,7 @@
 import { navItems } from "@/data/site-content";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -11,6 +11,27 @@ export function SiteHeader() {
   const [activeSection, setActiveSection] = useState("home");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light" | null>(null);
+
+  useEffect(() => {
+    // Determine initial theme on client mount
+    const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+    setTheme(initialTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    if (!theme) return;
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    if (newTheme === "light") {
+      document.documentElement.classList.add("light");
+    } else {
+      document.documentElement.classList.remove("light");
+    }
+  };
 
   useEffect(() => {
     const sections = navItems
@@ -69,8 +90,8 @@ export function SiteHeader() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={cn(
-          "mx-auto max-w-7xl rounded-2xl border border-white/10 bg-black/20 px-4 py-3 backdrop-blur-xl md:px-6",
-          isScrolled && "border-cyan-300/25 bg-black/50",
+          "mx-auto max-w-7xl rounded-2xl border border-[var(--header-border)] bg-[var(--header-bg)] px-4 py-3 backdrop-blur-xl md:px-6 transition-all duration-300",
+          isScrolled && "border-[var(--header-border-scrolled)] bg-[var(--header-bg-scrolled)]",
         )}
       >
         <div className="flex items-center justify-between gap-4">
@@ -82,6 +103,16 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
+            {/* Theme Toggle Button (Desktop - before nav links) */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="mr-2 inline-flex rounded-full border border-[var(--button-ghost-border)] bg-[var(--button-ghost-bg)] p-2 text-slate-300 hover:text-white transition hover:bg-[var(--button-ghost-hover-bg)] cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
             {navItems.map((item) => {
               const isHash = item.href.startsWith("#");
               const isAsset = item.href.includes(".");
@@ -119,18 +150,30 @@ export function SiteHeader() {
               );
             })}
           </nav>
-          <button
-            type="button"
-            onClick={() => setIsMobileOpen((value) => !value)}
-            className="inline-flex rounded-full border border-white/15 bg-white/5 p-2 text-white lg:hidden"
-            aria-label="Toggle menu"
-          >
-            {isMobileOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
+          <div className="flex items-center gap-3 lg:hidden">
+            {/* Theme Toggle Button (Mobile) */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="inline-flex rounded-full border border-[var(--button-ghost-border)] bg-[var(--button-ghost-bg)] p-2 text-slate-300 hover:text-white transition hover:bg-[var(--button-ghost-hover-bg)] cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsMobileOpen((value) => !value)}
+              className="inline-flex rounded-full border border-[var(--button-ghost-border)] bg-[var(--button-ghost-bg)] p-2 text-slate-300 hover:text-white transition hover:bg-[var(--button-ghost-hover-bg)] cursor-pointer"
+              aria-label="Toggle menu"
+            >
+              {isMobileOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
         </div>
 
         {isMobileOpen ? (
-          <nav className="mt-4 grid gap-2 border-t border-white/10 pt-4 lg:hidden">
+          <nav className="mt-4 grid gap-2 border-t border-[var(--header-border)] pt-4 lg:hidden">
             {navItems.map((item) => {
               const isHash = item.href.startsWith("#");
               const isAsset = item.href.includes(".");
@@ -144,7 +187,7 @@ export function SiteHeader() {
                     href={item.href}
                     onClick={() => setIsMobileOpen(false)}
                     className={cn(
-                      "rounded-xl px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white",
+                      "rounded-xl px-3 py-2 text-sm text-slate-300 transition hover:bg-[var(--button-ghost-bg)] hover:text-white",
                       isActive && "bg-white/10 text-cyan-100",
                     )}
                   >
@@ -161,7 +204,7 @@ export function SiteHeader() {
                   rel={isAsset ? "noopener noreferrer" : undefined}
                   onClick={() => setIsMobileOpen(false)}
                   className={cn(
-                    "rounded-xl px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white",
+                    "rounded-xl px-3 py-2 text-sm text-slate-300 transition hover:bg-[var(--button-ghost-bg)] hover:text-white",
                     isActive && "bg-white/10 text-cyan-100",
                   )}
                 >

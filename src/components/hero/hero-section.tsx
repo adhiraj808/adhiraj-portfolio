@@ -37,7 +37,7 @@ export function HeroSection() {
                     glowRadius={40} 
                     className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24"
                     glowColor="189 100% 70%"
-                    backgroundColor="#03050c"
+                    backgroundColor="var(--background)"
                     colors={["#5fe8ff", "#6674ff", "#5fe8ff"]}
                   >
                     <GlareHover
@@ -45,7 +45,7 @@ export function HeroSection() {
                       glareOpacity={0.2}
                       glareSize={200}
                     >
-                      <div className="relative h-full w-full bg-[#03050c]">
+                      <div className="relative h-full w-full bg-background">
                         <Image
                           src={introImage}
                           alt="Adhiraj Mishra"
@@ -107,7 +107,7 @@ export function HeroSection() {
                 borderRadius={40} 
                 glowRadius={150} 
                 glowColor="189 100% 70%"
-                backgroundColor="#03050c"
+                backgroundColor="var(--background)"
                 colors={["#5fe8ff", "#6674ff", "#5fe8ff"]}
                 className="h-full w-full shadow-2xl"
                 animated
@@ -119,7 +119,7 @@ export function HeroSection() {
                 >
                   <PixelTransition
                     firstContent={
-                      <div className="relative h-full w-full bg-[#03050c]">
+                      <div className="relative h-full w-full bg-background">
                         <Image
                           src={manAloneImage}
                           alt="Adhiraj Mishra"
@@ -130,7 +130,7 @@ export function HeroSection() {
                       </div>
                     }
                     secondContent={
-                      <div className="relative h-full w-full bg-[#03050c]">
+                      <div className="relative h-full w-full bg-background">
                         <Image
                           src={introImage}
                           alt="Adhiraj Mishra"
@@ -141,7 +141,7 @@ export function HeroSection() {
                       </div>
                     }
                     gridSize={8}
-                    pixelColor="#03050c"
+                    pixelColor="var(--background)"
                     animationStepDuration={0.15}
                     style={{ borderRadius: "40px" }}
                   />

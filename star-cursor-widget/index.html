@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Cursor Preview</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #1a1a2e; /* Dark background to make the glowing star pop */
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            cursor: default;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #a0a0b0;
+            font-size: 1.2rem;
+        }
+        .container {
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Star Cursor</h1>
+        <p>Move your mouse around to see the star follow you!</p>
+        <p>You can copy <code>star.js</code> to use this in any plain HTML portfolio, or copy <code>StarCursor.jsx</code> if you are using React/Next.js!</p>
+    </div>
+
+    <!-- Load the star tracking script -->
+    <script src="./star.js"></script>
+</body>
+</html>

@@ -70,7 +70,7 @@ export function ContactSection() {
 
         <div className="mt-12 flex flex-col gap-8 lg:flex-row">
           <Reveal className="w-full lg:w-1/3">
-            <div className="rounded-3xl border border-white/12 bg-white/5 p-6 md:p-8 backdrop-blur-xl h-fit">
+            <div className="rounded-3xl p-6 md:p-8 backdrop-blur-xl h-fit glass-card-style transition-all duration-300">
               <p className="text-xs font-semibold tracking-[0.2em] text-cyan-300 uppercase">Contact Information</p>
               <div className="mt-8 space-y-6">
                 <div className="flex items-start gap-4">
@@ -109,7 +109,7 @@ export function ContactSection() {
           </Reveal>
 
           <Reveal delay={0.08} className="w-full lg:w-2/3">
-            <div className="rounded-3xl border border-white/12 bg-black/40 p-6 md:p-8 backdrop-blur-xl shadow-2xl">
+            <div className="rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl glass-card-style transition-all duration-300">
               <form onSubmit={onSubmit} className="space-y-6">
                 {/* Honeypot field (hidden from users) */}
                 <input
@@ -131,7 +131,7 @@ export function ContactSection() {
                       type="text"
                       value={form.name}
                       onChange={(event) => setForm((curr) => ({ ...curr, name: event.target.value }))}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
+                      className="w-full rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-4 py-3 text-sm text-white placeholder-[var(--text-slate-400)] outline-none transition focus:border-cyan-400/50 focus:bg-[var(--input-bg-focus)]"
                       placeholder="Your name"
                     />
                   </div>
@@ -143,7 +143,7 @@ export function ContactSection() {
                       type="email"
                       value={form.email}
                       onChange={(event) => setForm((curr) => ({ ...curr, email: event.target.value }))}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
+                      className="w-full rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-4 py-3 text-sm text-white placeholder-[var(--text-slate-400)] outline-none transition focus:border-cyan-400/50 focus:bg-[var(--input-bg-focus)]"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -157,7 +157,7 @@ export function ContactSection() {
                     type="text"
                     value={form.topic}
                     onChange={(event) => setForm((curr) => ({ ...curr, topic: event.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
+                    className="w-full rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-4 py-3 text-sm text-white placeholder-[var(--text-slate-400)] outline-none transition focus:border-cyan-400/50 focus:bg-[var(--input-bg-focus)]"
                     placeholder="What would you like to discuss? (e.g. AI/ML, Web Dev, Robotics)"
                   />
                 </div>
@@ -170,7 +170,7 @@ export function ContactSection() {
                     rows={4}
                     value={form.message}
                     onChange={(event) => setForm((curr) => ({ ...curr, message: event.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-400/50 focus:bg-white/10 resize-none"
+                    className="w-full rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-4 py-3 text-sm text-white placeholder-[var(--text-slate-400)] outline-none transition focus:border-cyan-400/50 focus:bg-[var(--input-bg-focus)] resize-none"
                     placeholder="Tell me about your project or inquiry..."
                   />
                 </div>

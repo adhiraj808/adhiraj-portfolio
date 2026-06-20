@@ -29,11 +29,32 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${orbitron.variable} h-full scroll-smooth antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedTheme = localStorage.getItem('theme');
+                  var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+                  if (initialTheme === 'light') {
+                    document.documentElement.classList.add('light');
+                  } else {
+                    document.documentElement.classList.remove('light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <PetCursor pet="cat" />
-        <ClickSpark sparkColor="#fff" sparkSize={6} sparkRadius={20} sparkCount={8} duration={400} />
+        <ClickSpark sparkColor="var(--cyan)" sparkSize={6} sparkRadius={20} sparkCount={8} duration={400} />
       </body>
     </html>
   );

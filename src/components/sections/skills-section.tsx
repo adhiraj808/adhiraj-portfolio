@@ -49,7 +49,7 @@ export function SkillsSection() {
                   {techStack.map((tech) => (
                     <span 
                       key={tech} 
-                      className="px-3 py-1 rounded-full border border-slate-700 bg-slate-800/50 text-slate-300 text-sm"
+                      className="px-3 py-1 rounded-full border border-[var(--tag-border)] bg-[var(--tag-bg)] text-slate-300 text-sm transition-colors duration-300"
                     >
                       {tech}
                     </span>
@@ -60,7 +60,7 @@ export function SkillsSection() {
               <div className="space-y-6">
                 <div className={`grid gap-6 sm:grid-cols-2 ${!isExpanded ? 'max-md:max-h-[320px] max-md:overflow-hidden relative' : ''} transition-all duration-500`}>
                   {skills.map((skillGroup) => (
-                    <div key={skillGroup.category} className="p-6 rounded-xl border border-slate-700 bg-slate-800/30 backdrop-blur-sm">
+                    <div key={skillGroup.category} className="p-6 rounded-xl border border-[var(--glass-border)] bg-[var(--input-bg)] backdrop-blur-sm transition-colors duration-300">
                       <h3 className="font-semibold mb-4 text-lg text-white">{skillGroup.category}</h3>
                       <ul className="space-y-2">
                         {skillGroup.items.map((skill) => (
@@ -73,13 +73,13 @@ export function SkillsSection() {
                   ))}
                   
                   {!isExpanded && (
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a1220] to-transparent md:hidden pointer-events-none" />
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--background)] to-transparent md:hidden pointer-events-none transition-all duration-300" />
                   )}
                 </div>
                 
                 <button 
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="flex md:hidden items-center justify-center gap-2 w-full py-4 rounded-xl border border-white/10 bg-white/5 text-cyan-300 font-semibold transition hover:bg-white/10"
+                  className="flex md:hidden items-center justify-center gap-2 w-full py-4 rounded-xl border border-[var(--button-ghost-border)] bg-[var(--button-ghost-bg)] text-cyan-300 font-semibold transition hover:bg-[var(--button-ghost-hover-bg)]"
                 >
                   {isExpanded ? (
                     <>Show Less <ChevronUp size={18} /></>

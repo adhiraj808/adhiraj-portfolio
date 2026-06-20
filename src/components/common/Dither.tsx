@@ -153,15 +153,28 @@ void main() {
   float intensity = mix(0.12, 1.0, clamp(f, 0.0, 1.0)) * isLand;
   
   vec3 col = waveColor * intensity;
+  float maxColorVal = max(waveColor.r, max(waveColor.g, waveColor.b));
   
-  // Dither the color channel
-  vec3 ditheredCol = dither(gl_FragCoord.xy / resolution.xy, col);
+  vec3 ditheredCol = vec3(0.0);
+  float alpha = 0.0;
   
-  // Brightness maps to opacity
-  float brightness = max(ditheredCol.r, max(ditheredCol.g, ditheredCol.b));
-  
-  // Limit the max opacity of continents/waves to keep the background subtle (28% opacity max)
-  float alpha = clamp(brightness * 0.28, 0.0, 1.0);
+  if (maxColorVal < 0.6) {
+    // Light mode: Pure dark dots on light background
+    // Dither virtual white/gray to produce the bayer pattern properly
+    vec3 virtualCol = vec3(1.0) * intensity;
+    vec3 dCol = dither(gl_FragCoord.xy / resolution.xy, virtualCol);
+    float ditheredVal = max(dCol.r, max(dCol.g, dCol.b));
+    
+    ditheredCol = waveColor; // Output color is exactly the dark gray we passed
+    alpha = clamp(ditheredVal * 0.18, 0.0, 1.0); // Solid visible opacity for light mode
+  } else {
+    // Dark mode: Dynamic neon colors on dark background
+    vec3 dCol = dither(gl_FragCoord.xy / resolution.xy, col);
+    float ditheredVal = max(dCol.r, max(dCol.g, dCol.b));
+    
+    ditheredCol = dCol; // Output color is dithered neon color
+    alpha = clamp(ditheredVal * 0.28, 0.0, 1.0); // Original dark mode opacity
+  }
   
   gl_FragColor = vec4(ditheredCol, alpha);
 }
@@ -249,8 +262,8 @@ function DitheredWaves({
       const rect = gl.domElement.getBoundingClientRect();
       const dpr = gl.getPixelRatio();
       mouseRef.current.set(
-        (e.clientX - rect.left) * dpr,
-        (e.clientY - rect.top) * dpr
+          (e.clientX - rect.left) * dpr,
+          (e.clientY - rect.top) * dpr
       );
     };
     window.addEventListener("mousemove", handleWindowMouseMove);
@@ -285,16 +298,16 @@ function DitheredWaves({
   });
 
   return (
-    <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry args={[1, 1]} />
-      <shaderMaterial
-        vertexShader={waveVertexShader}
-        fragmentShader={waveFragmentShader}
-        uniforms={waveUniformsRef.current}
-        transparent={true}
-        depthWrite={false}
-      />
-    </mesh>
+      <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
+        <planeGeometry args={[1, 1]} />
+        <shaderMaterial
+            vertexShader={waveVertexShader}
+            fragmentShader={waveFragmentShader}
+            uniforms={waveUniformsRef.current}
+            transparent={true}
+            depthWrite={false}
+        />
+      </mesh>
   );
 }
 
@@ -323,10 +336,28 @@ export default function Dither({
 }: DitherProps) {
   const [mounted, setMounted] = useState(false);
   const [mapTexture, setMapTexture] = useState<THREE.CanvasTexture | null>(null);
+  const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Monitor theme changes on root html tag to update wave colors
+  useEffect(() => {
+    if (!mounted) return;
+    setIsLight(document.documentElement.classList.contains("light"));
+
+    const observer = new MutationObserver(() => {
+      setIsLight(document.documentElement.classList.contains("light"));
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, [mounted]);
 
   // Safe client-side vector parsing and canvas rendering of the world map SVG
   useEffect(() => {
@@ -385,6 +416,11 @@ export default function Dither({
   // Prevent SSR crashes by rendering only on the client once mounted and texture is ready
   if (!mounted || !mapTexture) return null;
 
+  // Gray #404040 [0.25, 0.25, 0.25] only for milk-white theme, normal neon blue for dark theme
+  const activeWaveColor: [number, number, number] = isLight
+    ? [0.25, 0.25, 0.25] // Dark Gray (#404040) for milk white theme
+    : waveColor;        // Revert to original neon blue/indigo for dark theme
+
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden">
       <Canvas
@@ -397,7 +433,7 @@ export default function Dither({
           waveSpeed={waveSpeed}
           waveFrequency={waveFrequency}
           waveAmplitude={waveAmplitude}
-          waveColor={waveColor}
+          waveColor={activeWaveColor}
           colorNum={colorNum}
           pixelSize={pixelSize}
           disableAnimation={disableAnimation}

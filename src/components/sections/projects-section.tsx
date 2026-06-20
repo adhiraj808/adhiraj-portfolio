@@ -41,7 +41,7 @@ export function ProjectsSection() {
                       <Link
                         href={project.githubUrl}
                         target="_blank"
-                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 text-xs font-semibold text-white transition hover:border-cyan-400/50 hover:bg-cyan-400/10 w-full md:w-auto"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--button-ghost-border)] bg-[var(--button-ghost-bg)] px-5 py-2.5 text-xs font-semibold text-white transition hover:border-cyan-400/50 hover:bg-[var(--button-ghost-hover-bg)] w-full md:w-auto"
                       >
                         <ExternalLink size={14} />
                         GitHub Code
