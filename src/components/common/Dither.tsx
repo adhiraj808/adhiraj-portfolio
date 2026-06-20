@@ -125,14 +125,11 @@ void main() {
   // Apply a 1.15x zoom (scale) so the map fills the page space better
   mapUv = (mapUv - 0.5) / 1.15 + 0.5;
   
-  // Determine if this pixel is on land (inside the continents) and if it is India
+  // Determine if this pixel is on land (inside the continents)
   float isLand = 0.0;
-  float isIndia = 0.0;
   if (mapUv.x >= 0.0 && mapUv.x <= 1.0 && mapUv.y >= 0.0 && mapUv.y <= 1.0) {
     vec4 mapColor = texture2D(uMap, mapUv);
     isLand = mapColor.a > 0.05 ? 1.0 : 0.0;
-    // India is highlighted in red in our Canvas-generated texture
-    isIndia = (isLand > 0.5 && mapColor.r > 0.8 && mapColor.g < 0.2 && mapColor.b < 0.2) ? 1.0 : 0.0;
   }
   
   vec2 normalizedPixelSize = pixelSize / resolution;
@@ -155,10 +152,7 @@ void main() {
   // The effect is masked by isLand so it only renders on the world map continents!
   float intensity = mix(0.12, 1.0, clamp(f, 0.0, 1.0)) * isLand;
   
-  // Highlight India in lighter neon green, others use default waveColor
-  vec3 indiaColor = vec3(0.15, 0.85, 0.35); // Lighter cyber emerald green
-  vec3 baseColor = mix(waveColor, indiaColor, isIndia);
-  vec3 col = baseColor * intensity;
+  vec3 col = waveColor * intensity;
   
   // Dither the color channel
   vec3 ditheredCol = dither(gl_FragCoord.xy / resolution.xy, col);
@@ -166,9 +160,8 @@ void main() {
   // Brightness maps to opacity
   float brightness = max(ditheredCol.r, max(ditheredCol.g, ditheredCol.b));
   
-  // Limit the max opacity of continents/waves (28% opacity max, India is 45% for highlighted visibility)
-  float alphaLimit = mix(0.28, 0.45, isIndia);
-  float alpha = clamp(brightness * alphaLimit, 0.0, 1.0);
+  // Limit the max opacity of continents/waves to keep the background subtle (28% opacity max)
+  float alpha = clamp(brightness * 0.28, 0.0, 1.0);
   
   gl_FragColor = vec4(ditheredCol, alpha);
 }
@@ -369,12 +362,7 @@ export default function Dither({
             const p = paths[i];
             const d = p.getAttribute("d");
             if (d) {
-              const name = p.getAttribute("name") || "";
-              const countryClass = p.getAttribute("class") || "";
-              const isIndia = name.toLowerCase() === "india" || countryClass.toUpperCase() === "IN";
-              
-              // Key India in red so the WebGL shader can apply color overrides
-              ctx.fillStyle = isIndia ? "#ff0000" : "#ffffff";
+              ctx.fillStyle = "#ffffff";
               
               // Rasterize SVG path string natively
               const path2D = new Path2D(d);
