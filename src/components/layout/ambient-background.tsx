@@ -8,14 +8,14 @@ export function AmbientBackground() {
     >
       {/* Dynamic interactive WebGL Dither background */}
       <Dither
-        waveSpeed={0.015} // Extremely smooth, slow floating wave
-        waveFrequency={2.0} // Broader, cleaner wave structures
-        waveAmplitude={0.3}
+        waveSpeed={0.5} // Faster wave speed
+        waveFrequency={3} // Higher frequency wave structures
+        waveAmplitude={0.3} // Standard amplitude
         waveColor={[0.25, 0.35, 0.85]} // Vibrant neon indigo-blue
-        colorNum={5}
-        pixelSize={2} // Sleek, fine-grain dither instead of chunky blocks
+        colorNum={4} // Color intensity step levels
+        pixelSize={2} // Fine high-tech dither grain
         enableMouseInteraction={true}
-        mouseRadius={1.0}
+        mouseRadius={0.1} // Custom pointer influence radius
       />
 
       {/* Dotted World Map overlay */}
