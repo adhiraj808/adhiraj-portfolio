@@ -119,9 +119,6 @@ void main() {
     mapUv.x = (mapUv.x - 0.5) / scaleX + 0.5;
   }
   
-  // Flip Y because WebGL texture space is inverted relative to SVG space
-  mapUv.y = 1.0 - mapUv.y;
-  
   // Determine if this pixel is on land (inside the continents)
   float isLand = 0.0;
   if (mapUv.x >= 0.0 && mapUv.x <= 1.0 && mapUv.y >= 0.0 && mapUv.y <= 1.0) {
