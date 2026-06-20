@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useRef, useEffect, useState, Suspense } from "react";
+import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
+import { TextureLoader } from "three";
 import * as THREE from "three";
 
 const waveVertexShader = `
@@ -28,6 +29,7 @@ uniform int enableMouseInteraction;
 uniform float mouseRadius;
 uniform float colorNum;
 uniform float pixelSize;
+uniform sampler2D uMap;
 
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
@@ -104,6 +106,29 @@ vec3 dither(vec2 uv, vec3 color) {
 }
 
 void main() {
+  // Correct aspect ratio of the world map texture to avoid stretching and center it
+  vec2 mapUv = gl_FragCoord.xy / resolution.xy;
+  float mapAspect = 2000.0 / 857.0; // Aspect ratio of simplemaps world map
+  float screenAspect = resolution.x / resolution.y;
+  
+  if (screenAspect > mapAspect) {
+    float scaleY = mapAspect / screenAspect;
+    mapUv.y = (mapUv.y - 0.5) / scaleY + 0.5;
+  } else {
+    float scaleX = screenAspect / mapAspect;
+    mapUv.x = (mapUv.x - 0.5) / scaleX + 0.5;
+  }
+  
+  // Flip Y because WebGL texture space is inverted relative to SVG space
+  mapUv.y = 1.0 - mapUv.y;
+  
+  // Determine if this pixel is on land (inside the continents)
+  float isLand = 0.0;
+  if (mapUv.x >= 0.0 && mapUv.x <= 1.0 && mapUv.y >= 0.0 && mapUv.y <= 1.0) {
+    vec4 mapColor = texture2D(uMap, mapUv);
+    isLand = mapColor.a > 0.05 ? 1.0 : 0.0;
+  }
+  
   vec2 normalizedPixelSize = pixelSize / resolution;
   vec2 uvPixel = normalizedPixelSize * floor(gl_FragCoord.xy / pixelSize);
   
@@ -120,17 +145,19 @@ void main() {
     f -= 0.5 * effect;
   }
   
-  // Mix between empty space and the wave color based on noise intensity
-  vec3 col = waveColor * clamp(f, 0.0, 1.0);
+  // Mix between a base level of continental glow and the wave ripples
+  // The effect is masked by isLand so it only renders on the world map continents!
+  float intensity = mix(0.12, 1.0, clamp(f, 0.0, 1.0)) * isLand;
+  vec3 col = waveColor * intensity;
   
-  // Dither the color
+  // Dither the color channel
   vec3 ditheredCol = dither(gl_FragCoord.xy / resolution.xy, col);
   
-  // Dithered brightness is mapped directly to the alpha channel
+  // Brightness maps to opacity
   float brightness = max(ditheredCol.r, max(ditheredCol.g, ditheredCol.b));
   
-  // We scale down the max opacity to keep it subtle and aesthetic (35% opacity max)
-  float alpha = clamp(brightness * 0.35, 0.0, 1.0);
+  // Limit the max opacity of continents/waves to keep the background subtle (28% opacity max)
+  float alpha = clamp(brightness * 0.28, 0.0, 1.0);
   
   gl_FragColor = vec4(ditheredCol, alpha);
 }
@@ -149,6 +176,7 @@ interface WaveUniforms {
   mouseRadius: THREE.IUniform<number>;
   colorNum: THREE.IUniform<number>;
   pixelSize: THREE.IUniform<number>;
+  uMap: THREE.IUniform<THREE.Texture | null>;
 }
 
 interface DitheredWavesProps {
@@ -177,6 +205,7 @@ function DitheredWaves({
   const mesh = useRef<THREE.Mesh>(null);
   const mouseRef = useRef(new THREE.Vector2());
   const { viewport, size, gl } = useThree();
+  const mapTexture = useLoader(TextureLoader, "/world-map-solid.svg");
 
   const waveUniformsRef = useRef<WaveUniforms>({
     time: { value: 0 },
@@ -190,6 +219,7 @@ function DitheredWaves({
     mouseRadius: { value: mouseRadius },
     colorNum: { value: colorNum },
     pixelSize: { value: pixelSize },
+    uMap: { value: mapTexture },
   });
 
   useEffect(() => {
@@ -297,17 +327,19 @@ export default function Dither({
         dpr={1}
         gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
       >
-        <DitheredWaves
-          waveSpeed={waveSpeed}
-          waveFrequency={waveFrequency}
-          waveAmplitude={waveAmplitude}
-          waveColor={waveColor}
-          colorNum={colorNum}
-          pixelSize={pixelSize}
-          disableAnimation={disableAnimation}
-          enableMouseInteraction={enableMouseInteraction}
-          mouseRadius={mouseRadius}
-        />
+        <Suspense fallback={null}>
+          <DitheredWaves
+            waveSpeed={waveSpeed}
+            waveFrequency={waveFrequency}
+            waveAmplitude={waveAmplitude}
+            waveColor={waveColor}
+            colorNum={colorNum}
+            pixelSize={pixelSize}
+            disableAnimation={disableAnimation}
+            enableMouseInteraction={enableMouseInteraction}
+            mouseRadius={mouseRadius}
+          />
+        </Suspense>
       </Canvas>
     </div>
   );
