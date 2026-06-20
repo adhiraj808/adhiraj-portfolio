@@ -18,6 +18,17 @@ export function AmbientBackground() {
         mouseRadius={1.0}
       />
 
+      {/* Dotted World Map overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.07] mix-blend-screen pointer-events-none"
+        style={{
+          backgroundImage: 'url("/world-map-dots.svg")',
+          backgroundSize: "contain",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
       {/* Retro scanline, noise, and grid overlays */}
       <div className="hero-noise absolute inset-0 opacity-25" />
       <div className="hero-grid absolute inset-0 opacity-20" />
