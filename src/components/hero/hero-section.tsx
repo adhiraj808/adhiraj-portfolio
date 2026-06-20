@@ -12,7 +12,10 @@ import manAloneImage from "./images/man-alone.jpg";
 
 export function HeroSection() {
   return (
-    <section id="home" className="relative overflow-hidden px-6 pt-28 pb-20 md:px-10 md:pt-32 lg:min-h-[90vh] lg:flex lg:items-center">
+    <section
+      id="home"
+      className="relative overflow-hidden px-6 pt-28 pb-20 md:px-10 md:pt-32 lg:min-h-[90vh] lg:flex lg:items-center"
+    >
       <div className="mx-auto w-full max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <motion.div
@@ -32,9 +35,9 @@ export function HeroSection() {
                 </h1>
                 {/* Mobile/Tablet Image: Inline with name */}
                 <div className="lg:hidden shrink-0">
-                  <BorderGlow 
-                    borderRadius={12} 
-                    glowRadius={40} 
+                  <BorderGlow
+                    borderRadius={12}
+                    glowRadius={40}
                     className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24"
                     glowColor="189 100% 70%"
                     backgroundColor="var(--background)"
@@ -60,11 +63,14 @@ export function HeroSection() {
               </div>
 
               <div className="space-y-4">
-                <p className="text-xl font-medium text-cyan-100 md:text-3xl">AIML Engineer</p>
+                <p className="text-xl font-medium text-cyan-100 md:text-3xl">
+                  AIML Engineer
+                </p>
                 <p className="max-w-2xl text-pretty text-base leading-relaxed text-slate-300 md:text-lg">
-                  Passionate B-Tech CSE (AIML) student deeply into AI, machine learning, and web
-                  development. Built and deployed real-time ML models along with responsive,
-                  production-ready web applications.
+                  Passionate B-Tech CSE (AIML) student deeply into AI, machine
+                  learning, and web development. Built and deployed real-time ML
+                  models along with responsive, production-ready web
+                  applications.
                 </p>
               </div>
             </div>
@@ -78,7 +84,7 @@ export function HeroSection() {
               </Link>
               <Link
                 href="#contact"
-                className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-cyan-200 hover:text-cyan-100"
+                className="rounded-full border border-cyan-300/60 bg-cyan-300/12 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/24"
               >
                 Contact Me
               </Link>
@@ -102,10 +108,10 @@ export function HeroSection() {
           >
             <div className="relative aspect-square w-full max-w-[450px] xl:max-w-[550px]">
               <div className="absolute -inset-10 rounded-full bg-cyan-500/10 blur-[100px] animate-pulse" />
-              
-              <BorderGlow 
-                borderRadius={40} 
-                glowRadius={150} 
+
+              <BorderGlow
+                borderRadius={40}
+                glowRadius={150}
                 glowColor="189 100% 70%"
                 backgroundColor="var(--background)"
                 colors={["#5fe8ff", "#6674ff", "#5fe8ff"]}
