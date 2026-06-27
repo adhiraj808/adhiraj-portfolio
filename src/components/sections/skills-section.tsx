@@ -7,16 +7,43 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 const skills = [
-  { category: "AI / Machine Learning", items: ["TensorFlow", "Keras", "Scikit-learn", "OpenCV", "YOLOv3", "Hugging Face API", "Google Gemini API"] },
-  { category: "Web Development", items: ["JavaScript", "React.js", "Next.js", "Tailwind CSS", "MongoDB", "HTML/CSS"] },
-  { category: "Data Analysis", items: ["Python", "NumPy", "Pandas", "Matplotlib", "SQL", "Power BI"] },
-  { category: "Cloud & DevOps", items: ["AWS (EC2, S3)", "Docker", "Git", "GitHub"] },
+  {
+    category: "AI / Machine Learning",
+    items: [
+      "Pytorch",
+      "Keras",
+      "Scikit-learn",
+      "OpenCV",
+      "YOLOv3",
+      "Hugging Face API",
+      "Google Gemini API",
+    ],
+  },
+  {
+    category: "Web Development",
+    items: [
+      "JavaScript",
+      "React.js",
+      "Next.js",
+      "Tailwind CSS",
+      "MongoDB",
+      "HTML/CSS",
+    ],
+  },
+  {
+    category: "Data Analysis",
+    items: ["Python", "NumPy", "Pandas", "Matplotlib", "SQL", "Power BI"],
+  },
+  {
+    category: "Cloud & DevOps",
+    items: ["AWS (EC2, S3)", "Docker", "Git", "GitHub"],
+  },
 ];
 
 const techStack = [
   "Python",
   "JavaScript",
-  "TensorFlow",
+  "Pytorch",
   "Next.js",
   "React.js",
   "OpenCV",
@@ -42,14 +69,18 @@ export function SkillsSection() {
             <div className="grid lg:grid-cols-2 gap-12 items-start p-4 sm:p-6">
               <div className="space-y-6">
                 <p className="text-lg text-slate-300 leading-relaxed">
-                  As an Engineering student passionate about Artificial Intelligence and Machine Learning, I dive deep into building intelligent systems that learn, adapt, and solve real-world problems.
-                  My expertise spans designing scalable, secure systems and leveraging deep learning techniques to push the boundaries of what AI can achieve.
+                  As an Engineering student passionate about Artificial
+                  Intelligence and Machine Learning, I dive deep into building
+                  intelligent systems that learn, adapt, and solve real-world
+                  problems. My expertise spans designing scalable, secure
+                  systems and leveraging deep learning techniques to push the
+                  boundaries of what AI can achieve.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {techStack.map((tech) => (
-                    <span 
-                      key={tech} 
-                      className="px-3 py-1 rounded-full border border-[var(--tag-border)] bg-[var(--tag-bg)] text-slate-300 text-sm transition-colors duration-300"
+                    <span
+                      key={tech}
+                      className="px-3 py-1 rounded-full border border-(--tag-border) bg-(--tag-bg) text-slate-300 text-sm transition-colors duration-300"
                     >
                       {tech}
                     </span>
@@ -58,10 +89,17 @@ export function SkillsSection() {
               </div>
 
               <div className="space-y-6">
-                <div className={`grid gap-6 sm:grid-cols-2 ${!isExpanded ? 'max-md:max-h-[320px] max-md:overflow-hidden relative' : ''} transition-all duration-500`}>
+                <div
+                  className={`grid gap-6 sm:grid-cols-2 ${!isExpanded ? "max-md:max-h-80 max-md:overflow-hidden relative" : ""} transition-all duration-500`}
+                >
                   {skills.map((skillGroup) => (
-                    <div key={skillGroup.category} className="p-6 rounded-xl border border-[var(--glass-border)] bg-[var(--input-bg)] backdrop-blur-sm transition-colors duration-300">
-                      <h3 className="font-semibold mb-4 text-lg text-white">{skillGroup.category}</h3>
+                    <div
+                      key={skillGroup.category}
+                      className="p-6 rounded-xl border border-(--glass-border) bg-(--input-bg) backdrop-blur-sm transition-colors duration-300"
+                    >
+                      <h3 className="font-semibold mb-4 text-lg text-white">
+                        {skillGroup.category}
+                      </h3>
                       <ul className="space-y-2">
                         {skillGroup.items.map((skill) => (
                           <li key={skill} className="text-slate-400 text-sm">
@@ -71,20 +109,24 @@ export function SkillsSection() {
                       </ul>
                     </div>
                   ))}
-                  
+
                   {!isExpanded && (
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--background)] to-transparent md:hidden pointer-events-none transition-all duration-300" />
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background to-transparent md:hidden pointer-events-none transition-all duration-300" />
                   )}
                 </div>
-                
-                <button 
+
+                <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="flex md:hidden items-center justify-center gap-2 w-full py-4 rounded-xl border border-[var(--button-ghost-border)] bg-[var(--button-ghost-bg)] text-cyan-300 font-semibold transition hover:bg-[var(--button-ghost-hover-bg)]"
+                  className="flex md:hidden items-center justify-center gap-2 w-full py-4 rounded-xl border border-(--button-ghost-border) bg-(--button-ghost-bg) text-cyan-300 font-semibold transition hover:bg-(--button-ghost-hover-bg)"
                 >
                   {isExpanded ? (
-                    <>Show Less <ChevronUp size={18} /></>
+                    <>
+                      Show Less <ChevronUp size={18} />
+                    </>
                   ) : (
-                    <>Read More <ChevronDown size={18} /></>
+                    <>
+                      Read More <ChevronDown size={18} />
+                    </>
                   )}
                 </button>
               </div>

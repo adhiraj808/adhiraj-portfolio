@@ -53,8 +53,16 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         {children}
-        <PetCursor pet="cat" />
-        <ClickSpark sparkColor="var(--cyan)" sparkSize={6} sparkRadius={20} sparkCount={8} duration={400} />
+        <div className="hidden lg:block">
+          <PetCursor pet="cat" />
+        </div>
+        <ClickSpark
+          sparkColor="var(--cyan)"
+          sparkSize={6}
+          sparkRadius={20}
+          sparkCount={8}
+          duration={400}
+        />
       </body>
     </html>
   );

@@ -20,7 +20,7 @@ export function SiteHeader() {
       "(prefers-color-scheme: dark)",
     ).matches;
     const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
-    setTheme(initialTheme);
+    document.documentElement.classList.add(initialTheme);
   }, []);
 
   const toggleTheme = () => {

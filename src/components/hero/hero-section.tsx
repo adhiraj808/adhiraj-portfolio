@@ -106,7 +106,7 @@ export function HeroSection() {
             transition={{ duration: 1, delay: 0.2 }}
             className="hidden lg:flex relative justify-end items-center"
           >
-            <div className="relative aspect-square w-full max-w-[450px] xl:max-w-[550px]">
+            <div className="relative aspect-square w-full max-w-112.5 xl:max-w-137.5px">
               <div className="absolute -inset-10 rounded-full bg-cyan-500/10 blur-[100px] animate-pulse" />
 
               <BorderGlow

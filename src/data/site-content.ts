@@ -71,7 +71,7 @@ export const skills: SkillItem[] = [
     title: "Programming & Machine Learning",
     summary:
       "Core coding and model-building stack used in coursework and project implementation.",
-    metrics: "Python | TensorFlow | Scikit-learn",
+    metrics: "Python | Pytorch | Scikit-learn",
   },
   {
     title: "Data Analysis",
@@ -83,6 +83,7 @@ export const skills: SkillItem[] = [
     title: "Web Development & Tools",
     summary:
       "Frontend foundations with database familiarity and practical development tool usage.",
-    metrics: "HTML | CSS | JavaScript | MongoDB | SQL | Git | GitHub | VS Code | Jupyter | PowerBI",
+    metrics:
+      "HTML | CSS | JavaScript | MongoDB | SQL | Git | GitHub | VS Code | Jupyter | PowerBI",
   },
 ];

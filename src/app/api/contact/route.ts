@@ -13,7 +13,10 @@ export async function POST(req: Request) {
 
     // 2. Validation
     if (!name || !email || !topic || !message) {
-      return NextResponse.json({ message: "All fields are required." }, { status: 400 });
+      return NextResponse.json(
+        { message: "All fields are required." },
+        { status: 400 },
+      );
     }
 
     // 3. Setup Nodemailer Transporter
@@ -38,9 +41,15 @@ export async function POST(req: Request) {
     // 5. Send Email
     await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ message: "Message sent successfully!" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Your message sent successfully!" },
+      { status: 200 },
+    );
   } catch (error) {
     console.error("Nodemailer Error:", error);
-    return NextResponse.json({ message: "Failed to send message. Please try again later." }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to send message. Please try again later." },
+      { status: 500 },
+    );
   }
 }
