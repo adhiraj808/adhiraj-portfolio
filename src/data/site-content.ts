@@ -35,6 +35,16 @@ export const keyMetrics = [
 
 export const projects: ProjectItem[] = [
   {
+    title: "MediAI – AI Medical Assistant",
+    category: "Recent Project",
+    description:
+      "An AI-powered medical assistant web application built to help users with symptom guidance, general health questions, and skin issue analysis through uploaded images.",
+    capabilities:
+      "React, Node.js, SQLite, Google Gemini AI, Clerk Authentication",
+    githubUrl: "https://github.com/Ankit231ak/Medical_ChatBot_3.0",
+    liveUrl: "#",
+  },
+  {
     title: "Harmful Weapons (Custom) Detection System - YOLOv3",
     category: "December 2025",
     description:
