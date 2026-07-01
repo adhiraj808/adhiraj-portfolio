@@ -37,7 +37,7 @@ export function ProjectsSection() {
                   </div>
 
                   <div className="flex flex-wrap gap-3 pt-2 md:flex-col md:pt-0 shrink-0">
-                    {project.githubUrl && (
+                    {project.githubUrl && project.githubUrl !== "#" && (
                       <Link
                         href={project.githubUrl}
                         target="_blank"
@@ -47,7 +47,7 @@ export function ProjectsSection() {
                         GitHub Code
                       </Link>
                     )}
-                    {project.liveUrl && (
+                    {project.liveUrl && project.liveUrl !== "#" && (
                       <Link
                         href={project.liveUrl}
                         target="_blank"
