@@ -29,8 +29,8 @@ export function ProjectsSection() {
                   <div className="flex-1 space-y-3">
                     <p className="text-xs tracking-[0.2em] text-cyan-200 uppercase">{project.category}</p>
                     <h3 className="font-display text-xl text-white md:text-2xl">{project.title}</h3>
-                    {/* Hide description and capabilities on mobile/tablet */}
-                    <div className="hidden md:block space-y-3">
+                    {/* Show description and capabilities on all devices */}
+                    <div className="space-y-3">
                       <p className="text-sm leading-relaxed text-slate-300">{project.description}</p>
                       <p className="text-xs text-slate-400/80">{project.capabilities}</p>
                     </div>

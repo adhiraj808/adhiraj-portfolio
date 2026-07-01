@@ -25,8 +25,22 @@ export default function ClickSpark({
   duration = 400,
 }: ClickSparkProps) {
   const [sparks, setSparks] = useState<SparkEvent[]>([]);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    const checkDesktop = () => {
+      const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+      const isLargeScreen = window.innerWidth >= 1024;
+      setIsDesktop(isFinePointer && isLargeScreen);
+    };
+    
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
     const handleGlobalClick = (e: MouseEvent) => {
       // Create a unique ID for each click event
       const newSpark = { id: Date.now(), x: e.clientX, y: e.clientY };
@@ -40,7 +54,9 @@ export default function ClickSpark({
 
     window.addEventListener('click', handleGlobalClick);
     return () => window.removeEventListener('click', handleGlobalClick);
-  }, [duration]);
+  }, [duration, isDesktop]);
+
+  if (!isDesktop) return null;
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 999999 }}>

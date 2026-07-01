@@ -151,14 +151,21 @@ export default function PixelTransition({
     );
   }, []);
 
+  if (isTouchDevice) {
+    return (
+      <div className={`${className}`} style={style}>
+        {firstContent}
+      </div>
+    );
+  }
+
   return (
     <div
       ref={containerRef}
       className={`pixel-transition ${className}`}
       style={style}
-      onMouseEnter={isTouchDevice ? undefined : handleEnter}
-      onMouseLeave={isTouchDevice ? undefined : handleLeave}
-      onClick={isTouchDevice ? () => animatePixels(!isActive) : undefined}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
     >
       <div className="pixel-transition__content">
         <div className="pixel-transition__default">{firstContent}</div>

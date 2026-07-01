@@ -20,7 +20,13 @@ export function SiteHeader() {
       "(prefers-color-scheme: dark)",
     ).matches;
     const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
-    document.documentElement.classList.add(initialTheme);
+    
+    setTheme(initialTheme);
+    if (initialTheme === "light") {
+      document.documentElement.classList.add("light");
+    } else {
+      document.documentElement.classList.remove("light");
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -88,13 +94,13 @@ export function SiteHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 md:px-8">
       <motion.div
-        initial={{ y: -16, opacity: 5 }}
+        initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={cn(
           "mx-auto max-w-7xl rounded-2xl border border-(--header-border) bg-(--header-bg) px-4 py-3 backdrop-blur-xl md:px-6 transition-all duration-300",
           isScrolled &&
-            "border-( -- header-border-scrolled)' bg-(--header-bg-scrolled)",
+            "border-(--header-border-scrolled) bg-(--header-bg-scrolled)",
         )}
       >
         <div className="flex items-center justify-between gap-4">
@@ -167,7 +173,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setIsMobileOpen((value) => !value)}
-              className="inline-flex rounded-full border border-(--button-ghost-border)] bg-(--button-ghost-bg) p-2 text-slate-300 hover:text-white transition hover:bg-(--button-ghost-hover-bg) cursor-pointer"
+              className="inline-flex rounded-full border border-(--button-ghost-border) bg-(--button-ghost-bg) p-2 text-slate-300 hover:text-white transition hover:bg-(--button-ghost-hover-bg) cursor-pointer"
               aria-label="Toggle menu"
             >
               {isMobileOpen ? <X size={18} /> : <Menu size={18} />}

@@ -1,7 +1,7 @@
 'use client';
 
 import Script from 'next/script';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export type PetType = 'cat' | 'dog' | 'tiger';
 
@@ -11,6 +11,21 @@ interface PetCursorProps {
 }
 
 export default function PetCursor({ pet = 'cat' }: PetCursorProps) {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      // Check both pointer capability and screen width to strictly target desktops
+      const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+      const isLargeScreen = window.innerWidth >= 1024;
+      setIsDesktop(isFinePointer && isLargeScreen);
+    };
+    
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
   const getPetFile = (p: PetType) => {
     switch (p) {
       case 'dog':
@@ -28,11 +43,14 @@ export default function PetCursor({ pet = 'cat' }: PetCursorProps) {
   // If the component is already loaded and the user changes the pet prop, 
   // we dynamically update the background image of the existing pet element.
   useEffect(() => {
+    if (!isDesktop) return;
     const nekoEl = document.getElementById('oneko');
     if (nekoEl) {
       nekoEl.style.backgroundImage = `url(${petFile})`;
     }
-  }, [petFile]);
+  }, [petFile, isDesktop]);
+
+  if (!isDesktop) return null;
 
   // Load the script and pass the initial pet file path
   return (
