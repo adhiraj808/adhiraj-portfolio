@@ -6,39 +6,21 @@ import { motion } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export function SiteHeader() {
   const [activeSection, setActiveSection] = useState("home");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light" | null>(null);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Determine initial theme on client mount
-    const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-    const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
-    
-    setTheme(initialTheme);
-    if (initialTheme === "light") {
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.remove("light");
-    }
+    setMounted(true);
   }, []);
 
   const toggleTheme = () => {
-    if (!theme) return;
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    if (newTheme === "light") {
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.remove("light");
-    }
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   useEffect(() => {
@@ -119,7 +101,7 @@ export function SiteHeader() {
               className="mr-2 inline-flex rounded-full border border-(--button-ghost-border) bg-(--button-ghost-bg) p-2 text-slate-300 hover:text-white transition hover:bg-(--button-ghost-hover-bg) cursor-pointer"
               aria-label="Toggle theme"
             >
-              {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+              {mounted && theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
             {navItems.map((item) => {
@@ -167,7 +149,7 @@ export function SiteHeader() {
               className="inline-flex rounded-full border border-(--button-ghost-border) bg-(--button-ghost-bg) p-2 text-slate-300 hover:text-white transition hover:bg-(--button-ghost-hover-bg) cursor-pointer"
               aria-label="Toggle theme"
             >
-              {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+              {mounted && theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
             <button

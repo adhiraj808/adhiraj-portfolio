@@ -8,9 +8,9 @@
   --indigo: #6674ff;
 
   /* Glass Card Custom Settings */
-  --glass-bg: rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-shadow: 0 20px 60px -30px rgba(13, 179, 255, 0.45);
+  --glass-bg: rgba(10, 18, 32, 0.4);
+  --glass-border: rgba(95, 232, 255, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
   /* Header Custom Settings */
   --header-bg: rgba(0, 0, 0, 0.2);
@@ -58,9 +58,9 @@
   --indigo: #4f46e5; /* High-contrast indigo */
 
   /* Glass Card Custom Settings (Premium Milk Glass) */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(30, 41, 59, 0.08);
-  --glass-shadow: 0 20px 50px -25px rgba(30, 41, 59, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 
   /* Header Custom Settings */
   --header-bg: rgba(255, 255, 255, 0.45);

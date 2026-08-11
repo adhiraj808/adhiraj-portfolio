@@ -1,3 +1,6 @@
+import pjct1 from "@/assets/mediai.png";
+import type { StaticImageData } from "next/image";
+
 export type NavItem = {
   label: string;
   href: string;
@@ -10,6 +13,7 @@ export type ProjectItem = {
   capabilities: string;
   githubUrl?: string;
   liveUrl?: string;
+  imageUrl?: string;
 };
 
 export type SkillItem = {
@@ -43,6 +47,7 @@ export const projects: ProjectItem[] = [
       "React, Node.js, SQLite, Google Gemini AI, Clerk Authentication",
     githubUrl: "https://github.com/Ankit231ak/Medical_ChatBot_3.0",
     liveUrl: "#",
+    imageUrl: pjct1.src,
   },
   {
     title: "Harmful Weapons (Custom) Detection System - YOLOv3",
@@ -53,6 +58,7 @@ export const projects: ProjectItem[] = [
       "Pre-trained YOLOv3 customization, dataset preprocessing, annotation formatting, bounding boxes with confidence scores",
     githubUrl: "https://github.com/adhiraj808",
     liveUrl: "#",
+    imageUrl: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&q=80&w=600",
   },
   {
     title: "Ping-Pong Game (Multiplayer)",
@@ -63,6 +69,7 @@ export const projects: ProjectItem[] = [
       "Ball physics, paddle movement, scoring logic, HTML + Tailwind CSS + JavaScript frontend, ongoing UI/UX improvements",
     githubUrl: "https://github.com/adhiraj808",
     liveUrl: "#",
+    imageUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600",
   },
   {
     title: "Frontend Development - VKRE Health Website",
@@ -73,6 +80,7 @@ export const projects: ProjectItem[] = [
       "HTML, Tailwind CSS, JavaScript, performance optimization, live site: https://vkrehealth-in.vercel.app",
     githubUrl: "https://github.com/adhiraj808",
     liveUrl: "https://vkrehealth-in.vercel.app",
+    imageUrl: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=600",
   },
 ];
 

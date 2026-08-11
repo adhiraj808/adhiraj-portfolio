@@ -3,7 +3,7 @@
 import Script from 'next/script';
 import React, { useEffect, useState } from 'react';
 
-export type PetType = 'cat' | 'dog' | 'tiger';
+export type PetType = 'cat';
 
 interface PetCursorProps {
   /** The type of pet to display. Defaults to 'cat' */
@@ -20,7 +20,7 @@ export default function PetCursor({ pet = 'cat' }: PetCursorProps) {
       const isLargeScreen = window.innerWidth >= 1024;
       setIsDesktop(isFinePointer && isLargeScreen);
     };
-    
+
     checkDesktop();
     window.addEventListener('resize', checkDesktop);
     return () => window.removeEventListener('resize', checkDesktop);
@@ -28,10 +28,6 @@ export default function PetCursor({ pet = 'cat' }: PetCursorProps) {
 
   const getPetFile = (p: PetType) => {
     switch (p) {
-      case 'dog':
-        return '/dog.gif';
-      case 'tiger':
-        return '/tora.gif';
       case 'cat':
       default:
         return '/oneko.gif';
@@ -54,10 +50,10 @@ export default function PetCursor({ pet = 'cat' }: PetCursorProps) {
 
   // Load the script and pass the initial pet file path
   return (
-    <Script 
-      src="/oneko.js" 
-      strategy="afterInteractive" 
-      data-cat={petFile} 
+    <Script
+      src="/oneko.js"
+      strategy="afterInteractive"
+      data-cat={petFile}
       onLoad={() => {
         const nekoEl = document.getElementById('oneko');
         if (nekoEl) {
